@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Jugadores.</string>
+
+    <string name="exitProgram">Salir</string>
+    <string name="titleCenter">Registro:</string>
+
+    <string name="editName">Nombre</string>
+    <string name="editCountry">País</string>
+    <string name="editAge">Edad</string>
+
+    <string name="textTeam">Equipo</string>
+    <string name="textPlace">Posición</string>
+
+    <string name="buttonAccept">Validar</string>
+    <string name="buttonCancel">Cancelar</string>
+    <string name="buttonOther">Otros datos</string>
+    <string name="buttonBack">Regresar</string>
+    <string name="buttonRecord">Grabar</string>
+
+    <string name="titleMain">Otros datos de interés</string>
+    <string name="titlePlace">Situación</string>
+    <string name="titleWin">Campeonatos ganados</string>
+
+    <string name="radioNacionalizado">Nacionalizado</string>
+    <string name="radioComunitarioo">Comunitario</string>
+    <string name="radioExtracomunitario">Extracomunitario</string>
+
+    <string name="winLeague">Liga de España</string>
+    <string name="winForeignLeague">Ligas Extranjeras</string>
+    <string name="winCup">Copa del Rey</string>
+    <string name="winChampionLeague">Ligas de Campeones</string>
+    <string name="winWorldCup">Mundial</string>
+
+    <string name="errorCampo"> Rellenar campo </string>
+    <string name="errorCampoNumerico"> La edad tiene que ser mayor que 0 </string>
+    <string name="errorCampoNoNumerico"> La edad tiene que ser un valor entero </string>
+</resources>
