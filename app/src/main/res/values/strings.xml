@@ -1,8 +1,25 @@
 <resources>
-    <string name="app_name">Jugadores.</string>
+    <string name="app_name">Plantillas</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_secciones">Secciones</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_actividad_equipos">ActividadEquipos</string>
+    <string name="title_activity_secciones_plantillas">SeccionesPlantillas</string>
 
-    <string name="exitProgram">Salir</string>
-    <string name="titleCenter">Registro:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_informacion_general">InformacionGeneral</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="title_activity_fran">fran</string>
+
 
     <string name="editName">Nombre</string>
     <string name="editCountry">País</string>
@@ -10,28 +27,16 @@
 
     <string name="textTeam">Equipo</string>
     <string name="textPlace">Posición</string>
+    <string name="title_activity_formulario_jugador">FormularioJugador</string>
 
-    <string name="buttonAccept">Validar</string>
-    <string name="buttonCancel">Cancelar</string>
-    <string name="buttonOther">Otros datos</string>
-    <string name="buttonBack">Regresar</string>
-    <string name="buttonRecord">Grabar</string>
-
-    <string name="titleMain">Otros datos de interés</string>
-    <string name="titlePlace">Situación</string>
-    <string name="titleWin">Campeonatos ganados</string>
-
-    <string name="radioNacionalizado">Nacionalizado</string>
-    <string name="radioComunitarioo">Comunitario</string>
-    <string name="radioExtracomunitario">Extracomunitario</string>
-
-    <string name="winLeague">Liga de España</string>
-    <string name="winForeignLeague">Ligas Extranjeras</string>
-    <string name="winCup">Copa del Rey</string>
-    <string name="winChampionLeague">Ligas de Campeones</string>
-    <string name="winWorldCup">Mundial</string>
 
     <string name="errorCampo"> Rellenar campo </string>
     <string name="errorCampoNumerico"> La edad tiene que ser mayor que 0 </string>
     <string name="errorCampoNoNumerico"> La edad tiene que ser un valor entero </string>
+    <string name="title_activity_formulario_cuerpo_tecnico">FormularioCuerpoTecnico</string>
+    <string name="title_activity_secciones_informacion">SeccionesInformacion</string>
+    <string name="title_activity_comol">comol</string>
+    <string name="title_activity_formulario_estadio">FormularioEstadio</string>
+    <string name="title_activity_formulario_informacion_general">FormularioInformacionGeneral
+    </string>
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuJugadorHome"
+        android:icon="@drawable/ic_home_black_24dp"
+        app:showAsAction="always"
+        android:title="Inicio"/>
+
+    <item
+        android:id="@+id/menuJugadorValidar"
+        android:icon="@drawable/ic_save_black_24dp"
+        app:showAsAction="always"
+        android:title="Validar"
+        android:tooltipText="Validar formulario"/>
+
+    <item
+        android:id="@+id/menuJugadorActualizar"
+        android:icon="@drawable/ic_sync_black_24dp"
+        app:showAsAction="always"
+        android:title="Actualizar"
+        android:tooltipText="Actualizar formulario"/>
+</menu>

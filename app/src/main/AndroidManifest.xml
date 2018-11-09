@@ -2,22 +2,54 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.franmay.plantillas">
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Plantillas"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".MainActivity"
+            android:label="Plantillas 2018-219"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Actividad" />
-        <activity android:name=".otrosDatosDeInteres"></activity>
-    </application>
 
+
+        <activity
+            android:name=".ActividadEquipos"
+            android:label="Seleccionar un equipo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SeccionesPlantillas"
+            android:label="@string/title_activity_secciones_plantillas"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FormularioJugador"
+            android:label="Registro."
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FormularioCuerpoTecnico"
+            android:label="@string/title_activity_formulario_cuerpo_tecnico"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SeccionesInformacion"
+            android:label="@string/title_activity_secciones_informacion"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FormularioEstadio"
+            android:label="@string/title_activity_formulario_estadio"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FormularioInformacionGeneral"
+            android:label="@string/title_activity_formulario_informacion_general"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
 </manifest>
