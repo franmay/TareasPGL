@@ -1,97 +1,136 @@
 package com.example.franmay.plantillas;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.example.franmay.plantillas.permisos.ObtenerPermisosCamara;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ListView listaImagenes;
-    AdaptadorImagenes adaptador;
-    ArrayList<Jugador> lista= new ArrayList<>();
-    Button botonSalir;
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    Context contexto;
+    //ImageView imagen;
+    //Button botonGrabarNacionalidad;
+    int nacionalizado=0, comunitario=0, extracomuniario=0;
+    int auxNacionalizado=0, auxComunitario=0, auxExtracomuniario=0;
+
+    int liga=0, ligaExtranjera=0, copa=0, champions=0, mundial=0;
+    int auxLiga=0, auxLigaExtranjera=0, auxCopa=0, auxChampions=0, auxMundial=0;
+
+    boolean grabar=false;
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-
-        contexto=this;
-
-
-        listaImagenes = (ListView) findViewById(R.id.listado);
-        botonSalir = (Button) findViewById(R.id.buttonExit);
-
-        botonSalir.setOnClickListener(this);
-
-        boolean botones[] = new boolean[3];
-        boolean cajas[] = new boolean[5];
-
-        Arrays.fill(cajas, Boolean.FALSE);
-
-
-        lista.add(new Jugador(R.drawable.asensio, "Jugador", "Equipo", "",  0, "Jugador", 0, 0, 0, cajas));
-        lista.add(new Jugador(R.drawable.rulli, "Jugador", "Equipo", "", 0, "Jugador", 0, 0,0, cajas));
-        lista.add(new Jugador(R.drawable.messi, "Jugador", "Equipo", "", 0, "Jugador", 0, 0, 0, cajas));
-        lista.add(new Jugador(R.drawable.navas, "Jugador", "Equipo", "", 0, "Jugador", 0, 0, 0, cajas));
-        lista.add(new Jugador(R.drawable.lopetegui, "Jugador", "Equipo", "", 0, "Jugador", 0, 0, 0, cajas));
-        lista.add(new Jugador(R.drawable.oblak, "Jugador", "Equipo", "",  0, "Jugador", 0, 0, 0, cajas));
-        lista.add(new Jugador(R.drawable.cazorla, "Jugador", "Equipo", "", 0, "Jugador", 0, 0, 0, cajas));
-        lista.add(new Jugador(R.drawable.joaquin, "Jugador", "Equipo", "", 0, "Jugador", 0, 0, 0, cajas));
-        lista.add(new Jugador(R.drawable.jesus_navas, "Jugador", "Equipo", "", 0, "Jugador", 0, 0, 0, cajas));
-
-
-
-        Bundle objetoRecibido = getIntent().getExtras();
-
-        if (objetoRecibido!=null)
-        {
-            lista = objetoRecibido.getParcelableArrayList("lista");
-        }
-
-
-        adaptador = new AdaptadorImagenes(this, lista);
-
-        listaImagenes.setAdapter(adaptador);
-
-        listaImagenes.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView<?> a, View v, int position, long id)
-            {
-                int posicion = position;
-                Intent accion = new Intent(contexto, Actividad.class);
-
-                accion.putExtra("actividad", true);
-                accion.putExtra("indice", posicion);
-
-                accion.putExtra("lista", lista);
-                startActivity(accion);
+        /*
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
-        });
+        });*/
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        /*Intent accionInformacion = new Intent(this, InformacionJugadores.class);
+        /*accionInformacion.putExtra("registroGrabado", registroGrabado);
+        accionInformacion.putExtra("objeto", (Parcelable) jugador);
+        startActivity(accionInformacion);*/
     }
 
 
     @Override
-    public void onClick(View v)
+    public void onBackPressed()
     {
-        if (v.getId() == botonSalir.getId())
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item)
+    {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_informacion_general)
+        {
+            Intent accion = new Intent(getApplicationContext(), ObtenerPermisosCamara.class);
+            startActivity(accion);
+        }
+        else
+        if (id == R.id.nav_plantillas)
+        {
+            Intent accion = new Intent(getApplicationContext(), ActividadEquipos.class);
+            startActivity(accion);
+        }
+        else
+        if (id == R.id.nav_imagenes)
+        {
+            Intent accion = new Intent(getApplicationContext(), ObtenerPermisosCamara.class);
+            startActivity(accion);
+        }
+        else
+        if (id == R.id.nav_salir)
         {
             Intent accionSalir = new Intent(Intent.ACTION_MAIN);
             accionSalir.addCategory(Intent.CATEGORY_HOME);
             accionSalir.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(accionSalir);
         }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
