@@ -4,12 +4,19 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+
 // esta clase contiene el método para mostrar un cuadro de diálogo
 public class VentanaEmergente {
 
     String titulo;
     String mensaje;
     Context contexto;
+
+
+    public VentanaEmergente()
+    {
+
+    }
 
 
     public VentanaEmergente(String titulo, String mensaje, Context contexto)

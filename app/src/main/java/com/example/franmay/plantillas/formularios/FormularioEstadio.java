@@ -14,14 +14,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.franmay.plantillas.InformacionGeneral;
 import com.example.franmay.plantillas.MainActivity;
 import com.example.franmay.plantillas.R;
-import com.example.franmay.plantillas.SeccionesInformacion;
 import com.example.franmay.plantillas.VentanaEmergente;
-import com.example.franmay.plantillas.clases.CuerpoTecnico;
-import com.example.franmay.plantillas.clases.Estadio;
-import com.example.franmay.plantillas.clases.Jugador;
+import com.example.franmay.plantillas.fragmentos.SeccionesInformacion;
+import com.example.franmay.plantillas.pojos.CuerpoTecnico;
+import com.example.franmay.plantillas.pojos.Estadio;
+import com.example.franmay.plantillas.pojos.InformacionGeneral;
+import com.example.franmay.plantillas.pojos.Jugador;
 
 import java.util.ArrayList;
 

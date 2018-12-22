@@ -31,7 +31,7 @@ import java.io.IOException;
 
 public class ObtenerPermisosCamara extends AppCompatActivity {
 
-    final int maximoFotos=13;
+    final int maximoFotos=14;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1 ;
 
     Context contexto;

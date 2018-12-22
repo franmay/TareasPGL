@@ -9,12 +9,14 @@ public class Contrato implements BaseColumns {
 
     public static String TABLA_JUGADORES = "jugadores";
     public static String TABLA_CUERPO_TECNICO = "cuerpo_tecnico";
+    public static String TABLA_EQUIPOS = "equipos";
 
     public static final Uri CONTENT_URI_JUGADORES = Uri.parse("content://" + AUTHORITY + "/" + TABLA_JUGADORES);
     public static final Uri CONTENT_URI_CUERPO_TECNICO = Uri.parse("content://" + AUTHORITY + "/" + TABLA_CUERPO_TECNICO);
-
+    public static final Uri CONTENT_URI_EQUIPOS = Uri.parse("content://" + AUTHORITY + "/" + TABLA_EQUIPOS);
 
     // Columnas tabla "jugadores"
+    public static final String ID_JUGADOR = "id";
     public static final String NOMBRE_JUGADOR = "nombre";
     public static final String EQUIPO_JUGADOR = "equipo";
     public static final String EDAD_JUGADOR = "edad";
@@ -35,6 +37,7 @@ public class Contrato implements BaseColumns {
 
 
     // Columnas tabla "cuerpo_tecnico"
+    public static final String ID_CUERPO_TECNICO = "id";
     public static final String NOMBRE_CUERPO_TECNICO = "nombre";
     public static final String EQUIPO_CUERPO_TECNICO = "equipo";
     public static final String EDAD_CUERPO_TECNICO = "edad";
@@ -42,4 +45,12 @@ public class Contrato implements BaseColumns {
     public static final String CARGO_CUERPO_TECNICO = "cargo";
     public static final String INDICE_CARGO = "indice_cargo";
     public static final String FOTO_CUERPO_TECNICO = "foto_cuerpo_tecnico";
+
+
+    // Columnas tabla "equipos"
+    public static final String ID_EQUIPO = "id";
+    public static final String ID_AUXILIAR = "id_jugador";
+    public static final String NOMBRE_EQUIPO = "nombre_equipo";
+    public static final String EQUIPO_PAIS = "pais";
+    public static final String FOTO_EQUIPO = "foto_equipo";
 }

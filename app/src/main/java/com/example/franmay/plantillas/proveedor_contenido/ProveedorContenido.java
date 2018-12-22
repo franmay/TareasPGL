@@ -14,6 +14,7 @@ import com.example.franmay.plantillas.database.ManejoBaseDatos;
 
 import static com.example.franmay.plantillas.variables_globales.VariablesGlobales.AUTHORITY;
 
+
 public class ProveedorContenido extends ContentProvider {
 
     public ManejoBaseDatos dbHelper;
@@ -24,6 +25,9 @@ public class ProveedorContenido extends ContentProvider {
 
     private static final int ONE_REG_CUERPO_TECNICO = 3;
     private static final int ALL_REGS_CUERPO_TECNICO = 4;
+
+    private static final int ONE_REG_EQUIPO = 5;
+    private static final int ALL_REGS_EQUIPO = 6;
 
     private static UriMatcher uriMatcher;
     private static SparseArray<String> mimeTypes;
@@ -50,6 +54,14 @@ public class ProveedorContenido extends ContentProvider {
                 Contrato.TABLA_CUERPO_TECNICO,
                 ALL_REGS_CUERPO_TECNICO);
 
+        uriMatcher.addURI(AUTHORITY,
+                Contrato.TABLA_EQUIPOS + "/#",
+                ONE_REG_EQUIPO);
+
+        uriMatcher.addURI(AUTHORITY,
+                Contrato.TABLA_EQUIPOS,
+                ALL_REGS_EQUIPO);
+
 
         mimeTypes.put(ONE_REG_PLAYER,
                 "vnd.android.cursor.item/vnd." + AUTHORITY + "." + Contrato.TABLA_JUGADORES);
@@ -62,6 +74,12 @@ public class ProveedorContenido extends ContentProvider {
 
         mimeTypes.put(ALL_REGS_CUERPO_TECNICO,
                 "vnd.android.cursor.dir/vnd." + AUTHORITY + "." + Contrato.TABLA_CUERPO_TECNICO);
+
+        mimeTypes.put(ONE_REG_EQUIPO,
+                "vnd.android.cursor.item/vnd." + AUTHORITY + "." + Contrato.TABLA_EQUIPOS);
+
+        mimeTypes.put(ALL_REGS_EQUIPO,
+                "vnd.android.cursor.dir/vnd." + AUTHORITY + "." + Contrato.TABLA_EQUIPOS);
     }
 
 
@@ -69,6 +87,7 @@ public class ProveedorContenido extends ContentProvider {
     {
 
     }
+
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs)
@@ -85,7 +104,7 @@ public class ProveedorContenido extends ContentProvider {
         {
             case ONE_REG_PLAYER:
                 tabla=uri.getPathSegments().get(0);
-                where = Contrato._ID + "=?";
+                where = Contrato.ID_JUGADOR + "=?";
                 argumentos=new String[] {uri.getLastPathSegment()};
             break;
 
@@ -95,7 +114,7 @@ public class ProveedorContenido extends ContentProvider {
 
             case ONE_REG_CUERPO_TECNICO:
                 tabla=uri.getPathSegments().get(0);
-                where = Contrato._ID + "=?";
+                where = Contrato.ID_CUERPO_TECNICO + "=?";
                 argumentos=new String[] {uri.getLastPathSegment()};
             break;
 
@@ -103,10 +122,21 @@ public class ProveedorContenido extends ContentProvider {
                 tabla=uri.getLastPathSegment();
             break;
 
+            case ONE_REG_EQUIPO:
+                tabla=uri.getPathSegments().get(0);
+                where = Contrato.ID_EQUIPO + "=?";
+                argumentos=new String[] {uri.getLastPathSegment()};
+            break;
+
+            case ALL_REGS_EQUIPO:
+                tabla=uri.getLastPathSegment();
+            break;
+
             default:
                 String mensajeError=String.valueOf(uri);
                 throw new IllegalArgumentException(mensajeError);
         }
+
 
 
         numeroRegistro=sqlDB.delete(tabla, where, argumentos);
@@ -117,19 +147,6 @@ public class ProveedorContenido extends ContentProvider {
         }
 
         return numeroRegistro;
-
-
-        /*try
-        {
-            numeroRegistro = sqlDB.delete(tabla, where, argumentos);
-        }
-        catch (IllegalArgumentException e)
-        {
-            String mensajeError=String.valueOf(uri);
-            throw new SQLException(mensajeError);
-        }
-
-        return numeroRegistro;*/
     }
 
 
@@ -141,8 +158,7 @@ public class ProveedorContenido extends ContentProvider {
 
 
     @Override
-    public Uri insert(Uri uri, ContentValues values)
-    {
+    public Uri insert(Uri uri, ContentValues values) {
         sqlDB = dbHelper.getWritableDatabase();
 
         String tabla;
@@ -165,10 +181,41 @@ public class ProveedorContenido extends ContentProvider {
                 tabla=uri.getLastPathSegment();
             break;
 
+            case ONE_REG_EQUIPO:
+                tabla=uri.getPathSegments().get(0);
+            break;
+
+            case ALL_REGS_EQUIPO:
+                tabla=uri.getLastPathSegment();
+            break;
+
             default:
                 String mensajeError=String.valueOf(uri);
                 throw new IllegalArgumentException(mensajeError);
         }
+
+
+
+
+
+        //long rowId = sqlDB.insert("tabla", null, values);
+
+        //long rowId=0;
+        /*try
+        {*/
+        /*try
+        {
+            long rowId = sqlDB.insert("tabla", null, values);
+
+            Uri rowUri = ContentUris.withAppendedId(uri, rowId);
+            getContext().getContentResolver().notifyChange(rowUri, null);
+            return rowUri;
+        }
+        catch (IllegalArgumentException e)
+        {
+            throw new IllegalArgumentException(e.getMessage());
+        }*/
+
 
 
         long rowId = sqlDB.insert(tabla, null, values);
@@ -191,7 +238,68 @@ public class ProveedorContenido extends ContentProvider {
             throw new SQLException(String.valueOf(rowUri));
         }
 
-        //return rowUri;
+
+
+
+
+
+
+
+        /*catch (ExecutionException e)
+        {
+            System.out.println("ffffffffffffffffffffffffffff = " + e.getMessage());
+            throw new SQLException("xxxx = " + e.getMessage());
+        }
+        catch (IllegalArgumentException e)
+        {
+            throw new SQLException("xxxx = " + e.getMessage());
+        }
+        catch (SQLiteException e)
+        {
+            System.out.println("ffffffffffffffffffffffffffff = " + e.getMessage());
+            throw new SQLException("xxxx = " + e.getMessage());
+        }*/
+
+
+            //System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz = " + rowId + " - " + tabla);
+
+            /*if (rowId > 0) {
+                Uri rowUri = ContentUris.withAppendedId(uri, rowId);
+                getContext().getContentResolver().notifyChange(rowUri, null);
+                return rowUri;
+            }
+            else
+            {
+                System.out.println("zzzzzzzzzfghfgjfjhgjhjjhkhjkhjkzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz = " + rowId + " - " + tabla);
+
+                Uri rowUri = ContentUris.withAppendedId(uri, rowId);
+                throw new SQLiteException(String.valueOf(rowUri));
+            }
+        /*}
+        catch (IllegalArgumentException e)
+        {
+            throw new SQLException("xxxx = " + e.getMessage());
+        }
+        catch (SQLiteException e)
+        {
+            System.out.println("ffffffffffffffffffffffffffff = " + e.getMessage());
+            throw new SQLException("xxxx = " + e.getMessage());
+        }*/
+
+
+        //long rowId = sqlDB.insert(tabla, null, values);
+
+        /*if (rowId > 0)
+        {
+            Uri rowUri = ContentUris.withAppendedId(uri, rowId);
+            getContext().getContentResolver().notifyChange(rowUri, null);
+            return rowUri;
+        }
+        else
+        {
+            Uri rowUri = ContentUris.withAppendedId(uri, rowId);
+            throw new SQLException(String.valueOf(rowUri));
+        }*/
     }
 
 
@@ -220,7 +328,7 @@ public class ProveedorContenido extends ContentProvider {
         {
             case ONE_REG_PLAYER:
                 tabla=uri.getPathSegments().get(0);
-                where="_id=" + uri.getLastPathSegment();
+                where="id=" + uri.getLastPathSegment();
             break;
 
             case ALL_REGS_PLAYER:
@@ -229,10 +337,19 @@ public class ProveedorContenido extends ContentProvider {
 
             case ONE_REG_CUERPO_TECNICO:
                 tabla=uri.getPathSegments().get(0);
-                where="_id=" + uri.getLastPathSegment();
+                where="id=" + uri.getLastPathSegment();
             break;
 
             case ALL_REGS_CUERPO_TECNICO:
+                tabla=uri.getLastPathSegment();
+            break;
+
+            case ONE_REG_EQUIPO:
+                tabla=uri.getPathSegments().get(0);
+                where="id=" + uri.getLastPathSegment();
+            break;
+
+            case ALL_REGS_EQUIPO:
                 tabla=uri.getLastPathSegment();
             break;
 
@@ -274,7 +391,7 @@ public class ProveedorContenido extends ContentProvider {
         {
             case ONE_REG_PLAYER:
                 tabla=uri.getPathSegments().get(0);
-                where = Contrato._ID + "=?";
+                where = Contrato.ID_JUGADOR + "=?";
                 argumentos=new String[] {uri.getLastPathSegment()};
             break;
 
@@ -284,11 +401,21 @@ public class ProveedorContenido extends ContentProvider {
 
             case ONE_REG_CUERPO_TECNICO:
                 tabla=uri.getPathSegments().get(0);
-                where = Contrato._ID + "=?";
+                where = Contrato.ID_CUERPO_TECNICO + "=?";
                 argumentos=new String[] {uri.getLastPathSegment()};
             break;
 
             case ALL_REGS_CUERPO_TECNICO:
+                tabla=uri.getLastPathSegment();
+            break;
+
+            case ONE_REG_EQUIPO:
+                tabla=uri.getPathSegments().get(0);
+                where = Contrato.ID_EQUIPO + "=?";
+                argumentos=new String[] {uri.getLastPathSegment()};
+            break;
+
+            case ALL_REGS_EQUIPO:
                 tabla=uri.getLastPathSegment();
             break;
 

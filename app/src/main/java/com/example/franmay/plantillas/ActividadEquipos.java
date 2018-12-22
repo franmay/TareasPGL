@@ -11,7 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.franmay.plantillas.adaptadores.AdaptadorEquipos;
-import com.example.franmay.plantillas.clases.Equipo;
+import com.example.franmay.plantillas.fragmentos.SeccionesPlantillas;
+import com.example.franmay.plantillas.pojos.Equipo;
 
 import java.util.ArrayList;
 

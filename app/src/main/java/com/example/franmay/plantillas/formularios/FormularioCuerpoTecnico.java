@@ -1,7 +1,9 @@
 package com.example.franmay.plantillas.formularios;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
 import android.graphics.Bitmap;
@@ -25,10 +27,10 @@ import android.widget.TextView;
 
 import com.example.franmay.plantillas.MainActivity;
 import com.example.franmay.plantillas.R;
-import com.example.franmay.plantillas.SeccionesPlantillas;
 import com.example.franmay.plantillas.VentanaEmergente;
-import com.example.franmay.plantillas.clases.CuerpoTecnico;
-import com.example.franmay.plantillas.clases.Jugador;
+import com.example.franmay.plantillas.fragmentos.SeccionesPlantillas;
+import com.example.franmay.plantillas.pojos.CuerpoTecnico;
+import com.example.franmay.plantillas.pojos.Jugador;
 import com.example.franmay.plantillas.proveedor_contenido.Contrato;
 
 import java.io.ByteArrayOutputStream;
@@ -546,8 +548,8 @@ public class FormularioCuerpoTecnico extends AppCompatActivity implements Adapte
         else
         {
             VentanaEmergente alerta = new VentanaEmergente("Advertencia.",
-                    "El registro no fue modificado...",
-                    this);
+                                                         "El registro no fue modificado...",
+                                                         this);
             alerta.ventana();
         }
     }
@@ -564,14 +566,27 @@ public class FormularioCuerpoTecnico extends AppCompatActivity implements Adapte
 
             if (numeroRegistros > 0)
             {
-                VentanaEmergente alerta = new VentanaEmergente("Mensaje.",
-                                                             "El miembro del Cuerpo Técnico fue eliminado...",
-                                                             this);
-                alerta.ventana();
+                AlertDialog.Builder ventana = new AlertDialog.Builder(contexto);
 
-                Intent accion = new Intent(this, SeccionesPlantillas.class);
-                accion.putExtra("nombreEquipo", equipo);
-                startActivity(accion);
+                ventana.setTitle("Mensaje.");
+                ventana.setMessage("El miembro del Cuerpo Técnico fue eliminado...");
+
+                // solo mostramos el botón "Aceptar"
+                ventana.setPositiveButton("Continuar", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.cancel();
+
+                        Intent accion = new Intent(contexto, SeccionesPlantillas.class);
+                        accion.putExtra("nombreEquipo", equipo);
+                        startActivity(accion);
+                    }
+                });
+
+                AlertDialog alert = ventana.create();
+                alert.show();
             }
             else
             {

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.franmay.plantillas.R;
-import com.example.franmay.plantillas.clases.Equipo;
+import com.example.franmay.plantillas.pojos.Equipo;
 
 import java.util.ArrayList;
 

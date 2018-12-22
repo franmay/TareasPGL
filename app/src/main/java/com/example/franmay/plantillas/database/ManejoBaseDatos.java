@@ -3,13 +3,14 @@ package com.example.franmay.plantillas.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.franmay.plantillas.proveedor_contenido.Contrato;
 
 public class ManejoBaseDatos extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "plantillas.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 18;
 
 
     public ManejoBaseDatos(Context context)
@@ -21,9 +22,11 @@ public class ManejoBaseDatos extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        String sqlJugadores = "create table "
+        String sqlJugadores = "create table if not exists "
                             + Contrato.TABLA_JUGADORES
-                            + " (_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
+                            //+ " (_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
+                            + "("
+                            + Contrato.ID_JUGADOR + " INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
                             + Contrato.NOMBRE_JUGADOR + " TEXT , "
                             + Contrato.EQUIPO_JUGADOR + " TEXT, "
                             + Contrato.EDAD_JUGADOR + " INTEGER, "
@@ -43,9 +46,11 @@ public class ManejoBaseDatos extends SQLiteOpenHelper {
                             + Contrato.MUNDIAL + " INTEGER)";
 
 
-        String sqlCuerpoTecnico = "create table "
+        String sqlCuerpoTecnico = "create table if not exists "
                                 + Contrato.TABLA_CUERPO_TECNICO
-                                + " (_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
+                                //+ " (_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
+                                + "("
+                                + Contrato.ID_CUERPO_TECNICO + " INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
                                 + Contrato.NOMBRE_CUERPO_TECNICO + " TEXT , "
                                 + Contrato.EQUIPO_CUERPO_TECNICO + " TEXT, "
                                 + Contrato.EDAD_CUERPO_TECNICO + " INTEGER, "
@@ -55,19 +60,40 @@ public class ManejoBaseDatos extends SQLiteOpenHelper {
                                 + Contrato.FOTO_CUERPO_TECNICO + " BLOB)";
 
 
+        String sqlEquipos = "create table if not exists "
+                          + Contrato.TABLA_EQUIPOS
+                          //+ " (_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
+                          + "("
+                          + Contrato.ID_EQUIPO + " INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
+                          + Contrato.ID_AUXILIAR + " INTEGER, "
+                          + Contrato.NOMBRE_EQUIPO + " TEXT , "
+                          + Contrato.EQUIPO_PAIS + " TEXT, "
+                          + Contrato.FOTO_EQUIPO + " BLOB, "
+                          + "FOREIGN KEY (`" +  Contrato.ID_AUXILIAR + "`) REFERENCES jugadores(`" + Contrato.ID_JUGADOR + "`)"
+                          + " ON DELETE CASCADE"
+                          + " ON UPDATE CASCADE)";
+
+
         db.execSQL(sqlJugadores);
         db.execSQL(sqlCuerpoTecnico);
+        db.execSQL(sqlEquipos);
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-        String sqlJugadores = "DROP TABLE IF EXISTS " + Contrato.TABLA_JUGADORES;
-        String sqlCuerpoTecnico = "DROP TABLE IF EXISTS " + Contrato.TABLA_CUERPO_TECNICO;
+        Log.d("comol", "actualizar");
+        System.out.println("=============================");
+        System.out.println(oldVersion + " - " + newVersion);
 
-        db.execSQL(sqlJugadores);
-        db.execSQL(sqlCuerpoTecnico);
+        String sqlDeleteJugadores = "DROP TABLE IF EXISTS " + Contrato.TABLA_JUGADORES;
+        String sqlDeleteCuerpoTecnico = "DROP TABLE IF EXISTS " + Contrato.TABLA_CUERPO_TECNICO;
+        String sqlDeleteEquipos = "DROP TABLE IF EXISTS " + Contrato.TABLA_EQUIPOS;
+
+        db.execSQL(sqlDeleteJugadores);
+        db.execSQL(sqlDeleteCuerpoTecnico);
+        db.execSQL(sqlDeleteEquipos);
 
         onCreate(db);
     }

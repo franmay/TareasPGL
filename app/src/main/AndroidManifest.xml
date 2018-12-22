@@ -2,10 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.franmay.plantillas">
 
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+        android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:allowBackup="true"
@@ -29,7 +33,7 @@
             android:label="Seleccionar un equipo"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SeccionesPlantillas"
+            android:name=".fragmentos.SeccionesPlantillas"
             android:label="@string/title_activity_secciones_plantillas"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -41,7 +45,7 @@
             android:label="Registro"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SeccionesInformacion"
+            android:name=".fragmentos.SeccionesInformacion"
             android:label="@string/title_activity_secciones_informacion"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -59,16 +63,26 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".permisos.ObtenerPermisosCamara"
+        <activity
+            android:name=".permisos.ObtenerPermisosCamara"
             android:label="Cargar imágenes"
             android:parentActivityName=".MainActivity">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".formularios.FormularioEquipos"
+            android:label="Seleccionar equipo" />
+        <activity
+            android:name=".formularios.FormularioEquiposJugador"
+            android:label="Equipos anteriores">
 
-        <activity android:name=".formularios.InformacionJugadores"
-            android:label="Información extra" />
+        </activity>
+        <activity
+            android:name=".fragmentos.SeccionesEquipos"
+            android:label="Seleccionar equipo"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
+
 </manifest>

@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.example.franmay.plantillas.InformacionGeneral;
 import com.example.franmay.plantillas.R;
+import com.example.franmay.plantillas.pojos.InformacionGeneral;
 
 import java.util.ArrayList;
 

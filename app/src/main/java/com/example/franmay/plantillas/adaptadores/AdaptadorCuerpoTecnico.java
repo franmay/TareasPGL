@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.franmay.plantillas.R;
-import com.example.franmay.plantillas.clases.CuerpoTecnico;
+import com.example.franmay.plantillas.pojos.CuerpoTecnico;
 
 import java.util.ArrayList;
 

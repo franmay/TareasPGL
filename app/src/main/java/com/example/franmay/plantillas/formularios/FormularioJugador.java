@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,15 +28,16 @@ import android.widget.TextView;
 
 import com.example.franmay.plantillas.MainActivity;
 import com.example.franmay.plantillas.R;
-import com.example.franmay.plantillas.SeccionesPlantillas;
 import com.example.franmay.plantillas.VentanaEmergente;
-import com.example.franmay.plantillas.clases.CuerpoTecnico;
-import com.example.franmay.plantillas.clases.Jugador;
+import com.example.franmay.plantillas.fragmentos.SeccionesPlantillas;
+import com.example.franmay.plantillas.pojos.CuerpoTecnico;
+import com.example.franmay.plantillas.pojos.Jugador;
 import com.example.franmay.plantillas.proveedor_contenido.Contrato;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class FormularioJugador extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -258,7 +260,26 @@ public class FormularioJugador extends AppCompatActivity implements AdapterView.
             case R.id.menuJugadorHome:
                 Intent accion = new Intent(this, MainActivity.class);
                 startActivity(accion);
-             break;
+            break;
+
+            case R.id.menuEquiposJugador:
+                if (!insertar)
+                {
+                    Intent accionEquipos = new Intent(this, FormularioEquiposJugador.class);
+
+                    accionEquipos.putExtra("insertar", false);
+                    accionEquipos.putExtra("nombreEquipo", equipo);
+                    accionEquipos.putExtra("objeto", (Parcelable) jugadorActual);
+                    startActivity(accionEquipos);
+                }
+                else
+                {
+                    String mensaje="Tienes que registrar el jugador para poder continuar...";
+
+                    VentanaEmergente ventanaEmergente = new VentanaEmergente("Advertencia.", mensaje, this);
+                    ventanaEmergente.ventana();
+                }
+            break;
 
             case R.id.tomarFotoJugador:
                 buscarFotoJugador();
@@ -327,7 +348,7 @@ public class FormularioJugador extends AppCompatActivity implements AdapterView.
     {
         Intent intent=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/");
-        startActivityForResult(intent.createChooser(intent,"Seleccione la Aplicación"),CODIGO_IMAGEN);
+        startActivityForResult(intent.createChooser(intent,"Seleccione la Aplicación"), CODIGO_IMAGEN);
     }
 
 
@@ -342,6 +363,16 @@ public class FormularioJugador extends AppCompatActivity implements AdapterView.
         editarEdad.setError(null);
         editarPais.setError(null);
 
+
+        if (!imagenCargada)
+        {
+            VentanaEmergente cuadroDialogo = new VentanaEmergente("Advertencia",
+                                                                "No se ha seleccionado ninguna imagen...",
+                                                                         contexto);
+            cuadroDialogo.ventana();
+
+            return;
+        }
 
         if (!validarString(nombre, editarNombre))
             return;
@@ -422,6 +453,7 @@ public class FormularioJugador extends AppCompatActivity implements AdapterView.
            valores.put(Contrato.MUNDIAL, jugador.getMundial());
 
 
+
         try
         {
             Uri uri = getApplicationContext().getContentResolver().insert(Contrato.CONTENT_URI_JUGADORES, valores);
@@ -435,23 +467,23 @@ public class FormularioJugador extends AppCompatActivity implements AdapterView.
 
 
             jugadorActual = new Jugador(idDevuelto,
-                                        jugador.getNombre(),
-                                        jugador.getEquipo(),
-                                        jugador.getPais(),
-                                        jugador.getPosicion(),
-                                        jugador.getIndicePosicion(),
-                                        jugador.getEdad(),
-                                        jugador.getFoto(),
+                    jugador.getNombre(),
+                    jugador.getEquipo(),
+                    jugador.getPais(),
+                    jugador.getPosicion(),
+                    jugador.getIndicePosicion(),
+                    jugador.getEdad(),
+                    jugador.getFoto(),
 
-                                        nacionalizado,
-                                        comunitario,
-                                        extraComunitario,
+                    nacionalizado,
+                    comunitario,
+                    extraComunitario,
 
-                                        liga,
-                                        ligaExtranjera,
-                                        copa,
-                                        champions,
-                                        mundial);
+                    liga,
+                    ligaExtranjera,
+                    copa,
+                    champions,
+                    mundial);
 
 
             cambiosRadioButton[0]=nacionalizado;
@@ -780,9 +812,9 @@ public class FormularioJugador extends AppCompatActivity implements AdapterView.
         {
             try
             {
-                Uri uri = Uri.parse(Contrato.CONTENT_URI_JUGADORES + "/" + jugadorActual.getId());
+                Uri uriJurador = Uri.parse(Contrato.CONTENT_URI_JUGADORES + "/" + jugadorActual.getId());
 
-                int numeroRegistros=getApplicationContext().getContentResolver().update(uri, valores, null, null);
+                int numeroRegistros=getApplicationContext().getContentResolver().update(uriJurador, valores, null, null);
 
                 if (numeroRegistros>0)
                 {
@@ -835,13 +867,14 @@ public class FormularioJugador extends AppCompatActivity implements AdapterView.
                     VentanaEmergente alerta = new VentanaEmergente("Mensaje.",
                                                                  "El jugador fue modificado...",
                                                                  this);
-                    alerta.ventana();
+
+                        alerta.ventana();
                 }
                 else
                 {
                     VentanaEmergente alerta = new VentanaEmergente("Advertencia.",
-                                                                 "El jugador no se pudo eliminar\n" +
-                                                                          "o no se encuentra registrado...",
+                                                                 "El jugador no se pudo modificar\n" +
+                                                                          "o no se encuentra registrado en la Bitácora...",
                                                                  this);
                     alerta.ventana();
                 }
@@ -878,21 +911,34 @@ public class FormularioJugador extends AppCompatActivity implements AdapterView.
 
             if (numeroRegistros > 0)
             {
-                VentanaEmergente alerta = new VentanaEmergente("Mensaje.",
-                                                             "El jugador fue eliminado...",
-                                                             this);
-                alerta.ventana();
+                AlertDialog.Builder ventana = new AlertDialog.Builder(contexto);
 
-                Intent accion = new Intent(this, SeccionesPlantillas.class);
-                accion.putExtra("nombreEquipo", equipo);
-                startActivity(accion);
+                ventana.setTitle("Mensaje.");
+                ventana.setMessage("Jugador eliminado correctamente...");
+
+                // solo mostramos el botón "Aceptar"
+                ventana.setPositiveButton("Continuar", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.cancel();
+
+                        Intent accion = new Intent(contexto, SeccionesPlantillas.class);
+                        accion.putExtra("nombreEquipo", equipo);
+                        startActivity(accion);
+                    }
+                });
+
+                AlertDialog alert = ventana.create();
+                alert.show();
             }
             else
             {
                 VentanaEmergente alerta = new VentanaEmergente("Advertencia.",
                                                              "El jugador no se pudo eliminar\n" +
-                                                                     "o no se encuentra registrado...",
-                                                            this);
+                                                                      "o no se encuentra registrado...",
+                                                             this);
                 alerta.ventana();
             }
         }

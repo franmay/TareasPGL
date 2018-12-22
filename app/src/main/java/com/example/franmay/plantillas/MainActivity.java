@@ -17,18 +17,6 @@ import com.example.franmay.plantillas.permisos.ObtenerPermisosCamara;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //ImageView imagen;
-    //Button botonGrabarNacionalidad;
-    int nacionalizado=0, comunitario=0, extracomuniario=0;
-    int auxNacionalizado=0, auxComunitario=0, auxExtracomuniario=0;
-
-    int liga=0, ligaExtranjera=0, copa=0, champions=0, mundial=0;
-    int auxLiga=0, auxLigaExtranjera=0, auxCopa=0, auxChampions=0, auxMundial=0;
-
-    boolean grabar=false;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +42,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        /*Intent accionInformacion = new Intent(this, InformacionJugadores.class);
-        /*accionInformacion.putExtra("registroGrabado", registroGrabado);
-        accionInformacion.putExtra("objeto", (Parcelable) jugador);
-        startActivity(accionInformacion);*/
     }
 
 
@@ -105,8 +88,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_informacion_general)
         {
-            Intent accion = new Intent(getApplicationContext(), ObtenerPermisosCamara.class);
-            startActivity(accion);
+            //Intent accion = new Intent(getApplicationContext(), Mapas.class);
+            //startActivity(accion);
         }
         else
         if (id == R.id.nav_plantillas)

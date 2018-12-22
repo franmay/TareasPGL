@@ -35,6 +35,12 @@
         android:title="Inicio"/>
 
     <item
+        android:id="@+id/menuEquiposJugador"
+        android:icon="@drawable/ic_futbol"
+        app:showAsAction="always"
+        android:title="menuEquiposJugador"/>
+
+    <item
         android:id="@+id/tomarFotoJugador"
         android:title="foto jugador"
         android:icon="@drawable/ic_camera_alt_black_24dp"
